@@ -39,6 +39,13 @@ print('mean duration =', round(ticket_data['duration'].mean(), 2), 'hours')
 print('most trips have a duration =', round(ticket_data['duration'].value_counts().idxmax(), 2), 'hours')
 print('_________________________________________________________')
 
+from helpers.Geo import Geo
+from helpers.Manager import Manager
+
+print(Manager.transportTypesOfTicket(6795025, ticket_data, providers))
+print(Geo.getLatLongStation(2, stations))
+print(Geo.distanceOfTicket(6795025, ticket_data, stations), 'km')
+
 # print(ticket_data.head())
 # fill NAN values with the mode (value with max occurences)
 ticket_data['price_in_cents'] = ticket_data['price_in_cents'].fillna(ticket_data['price_in_cents'].value_counts().idxmax())
