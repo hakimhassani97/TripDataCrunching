@@ -17,7 +17,7 @@ print('min price =', round(ticket_data['price_in_cents'].min()/100, 2), '€')
 print('max price =', round(ticket_data['price_in_cents'].max()/100, 2), '€')
 print('median price =', round(ticket_data['price_in_cents'].median()/100, 2), '€')
 print('mean price =', round(ticket_data['price_in_cents'].mean()/100, 2), '€')
-print('most frequent price =', round(ticket_data['price_in_cents'].value_counts().idxmax()/100, 2), '€')
+print('most trips have a price =', round(ticket_data['price_in_cents'].value_counts().idxmax()/100, 2), '€')
 print('_________________________________________________________')
 
 print('_________________________________________________________')
@@ -25,20 +25,18 @@ print('Duration statistics')
 print('_________________________________________________________')
 print('number of NAN values in departure_ts =', ticket_data['departure_ts'].isna().sum())
 print('number of NAN values in arrival_ts =', ticket_data['arrival_ts'].isna().sum())
-# add duration column
-from datetime import datetime
+# add duration column in hours
 fmt = '%Y-%m-%d %H:%M:%S+%f'
 ticket_data['departure_ts'] = pd.to_datetime(ticket_data['departure_ts'], format=fmt)
 ticket_data['arrival_ts'] = pd.to_datetime(ticket_data['arrival_ts'], format=fmt)
 ticket_data['duration'] = ticket_data['arrival_ts'] - ticket_data['departure_ts']
 ticket_data['duration'] = round(ticket_data['duration'].dt.seconds / 3600, 2)
-print(ticket_data['duration'])
 
-# print('min price =', round(ticket_data['price_in_cents'].min()/100, 2), '€')
-# print('max price =', round(ticket_data['price_in_cents'].max()/100, 2), '€')
-# print('median price =', round(ticket_data['price_in_cents'].median()/100, 2), '€')
-# print('mean price =', round(ticket_data['price_in_cents'].mean()/100, 2), '€')
-# print('most frequent price =', round(ticket_data['price_in_cents'].value_counts().idxmax()/100, 2), '€')
+print('min duration =', round(ticket_data['duration'].min(), 2), 'hours')
+print('max duration =', round(ticket_data['duration'].max(), 2), 'hours')
+print('median duration =', round(ticket_data['duration'].median(), 2), 'hours')
+print('mean duration =', round(ticket_data['duration'].mean(), 2), 'hours')
+print('most trips have a duration =', round(ticket_data['duration'].value_counts().idxmax(), 2), 'hours')
 print('_________________________________________________________')
 
 # print(ticket_data.head())
