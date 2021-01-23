@@ -31,7 +31,9 @@ class Geo:
                 stations : list of the (lat, long) of all the stations in the trip
         '''
         if len(stations)<2:
-            raise ValueError('stations array must contain at least 2 stations')
+            # raise ValueError('stations array must contain at least 2 stations')
+            print('Warning : stations array must contain at least 2 stations')
+            return 0.
         distance = 0
         o_station = stations[0]
         for s in stations[1:]:
