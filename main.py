@@ -44,7 +44,7 @@ from helpers.Manager import Manager
 
 print(Manager.transportTypesOfTicket(6795025, ticket_data, providers))
 print(Geo.getLatLongStation(2, stations))
-print(Geo.distanceOfTicket(6795025, ticket_data, stations), 'km')
+print(Geo.distanceOfTicket(6795027, ticket_data, stations), 'km')
 
 # print(ticket_data.head())
 # fill NAN values with the mode (value with max occurences)
