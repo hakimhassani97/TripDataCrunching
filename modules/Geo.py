@@ -32,7 +32,7 @@ class Geo:
         '''
         if len(stations)<2:
             # raise ValueError('stations array must contain at least 2 stations')
-            print('Warning : stations array must contain at least 2 stations')
+            # print('Warning : stations array must contain at least 2 stations')
             return 0.
         distance = 0
         o_station = stations[0]
@@ -55,6 +55,19 @@ class Geo:
         return (lat,lon)
     
     @staticmethod
+    def getLatLongCity(cityId, cities):
+        '''
+            returns the Latitude and Longitude of the city
+        '''
+        lat, lon = 0, 0
+        city = cities[cities['id']==cityId]
+        if len(city)>0:
+            city = city.iloc[0]
+            lat = city['latitude'] if not pd.isna(city['latitude']) else ''
+            lon = city['longitude'] if not pd.isna(city['longitude']) else ''
+        return (lat,lon)
+    
+    @staticmethod
     def distanceOfTicket(ticketId, tickets, stations):
         '''
             returns the distance of the trip with ticketId
@@ -73,6 +86,35 @@ class Geo:
                 stationIds.append(ticket['d_station'])
         stationIds = [int(s) for s in stationIds]
         stationsLatLong = [Geo.getLatLongStation(stationdId, stations) for stationdId in stationIds]
+        stationsLatLong = pd.unique(stationsLatLong)
+        distance = Geo.distanceTrip(stationsLatLong)
+        return distance
+    
+    @staticmethod
+    def distanceOfTicketObject(ticket, stations, cities):
+        '''
+            returns the distance of the trip with ticketId
+        '''
+        stationIds = []
+        middleStations = []
+        if len(ticket)>0:
+            if not pd.isna(ticket['o_station']):
+                stationIds.append(ticket['o_station'])
+            if not pd.isna(ticket['middle_stations']):
+                middleStations = ticket['middle_stations'].replace('{', '').replace('}', '').split(',')
+                stationIds.extend(middleStations)
+            if not pd.isna(ticket['d_station']):
+                stationIds.append(ticket['d_station'])
+        
+        if len(stationIds) > 0:
+            # if we have the station id
+            stationIds = [int(s) for s in stationIds]
+            stationsLatLong = [Geo.getLatLongStation(stationdId, stations) for stationdId in stationIds]
+        else:
+            # if we have only the city id
+            cityIds = [ticket['o_city'], ticket['d_city']]
+            cityIds = [int(s) for s in cityIds]
+            stationsLatLong = [Geo.getLatLongCity(cityId, cities) for cityId in cityIds]
         stationsLatLong = pd.unique(stationsLatLong)
         distance = Geo.distanceTrip(stationsLatLong)
         return distance

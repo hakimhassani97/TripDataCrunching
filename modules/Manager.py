@@ -48,7 +48,6 @@ class Manager:
                 ticket : a ticket row\n
                 tickets : tickets dataset
         '''
-        print(ticket)
         companies = ''
         company = ticket['company'] if not pd.isna(ticket['company']) else ''
         other_companies = ticket['other_companies'] if not pd.isna(ticket['other_companies']) else ''
