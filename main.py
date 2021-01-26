@@ -39,8 +39,8 @@ print('mean duration =', round(ticket_data['duration'].mean(), 2), 'hours')
 print('most trips have a duration =', round(ticket_data['duration'].value_counts().idxmax(), 2), 'hours')
 print('_________________________________________________________')
 
-from helpers.Geo import Geo
-from helpers.Manager import Manager
+from modules.Geo import Geo
+from modules.Manager import Manager
 
 print(Manager.transportTypesOfTicket(6795025, ticket_data, providers))
 print(Geo.getLatLongStation(2, stations))
